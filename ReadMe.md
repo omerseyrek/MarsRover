@@ -7,18 +7,18 @@ dotnet new sln MarsRover \
 dotnet new classlib -o MarsRoverLib \
 dotnet new classlib -o MarsRoverControllerLib \
 dotnet new console -n MarsRover \
-dotnet new xunit -o MarsRover.Tests \
+dotnet new xunit -o MarsRover.Tests 
 
 dotnet sln add ./MarsRoverLib/MarsRoverLib.csproj \
 dotnet sln add MarsRoverControllerLib\MarsRoverControllerLib.csproj \
 dotnet sln add ./MarsRover/MarsRover.csproj \
-dotnet sln add ./MarsRover.Tests/MarsRover.Tests.csproj \
+dotnet sln add ./MarsRover.Tests/MarsRover.Tests.csproj 
 
 dotnet add ./MarsRoverControllerLib/MarsRoverControllerLib.csproj reference ./MarsRoverLib/MarsRoverLib.csproj \
 dotnet add ./MarsRover/MarsRover.csproj reference ./MarsRoverLib/MarsRoverLib.csproj \
 dotnet add ./MarsRover/MarsRover.csproj reference ./MarsRoverControllerLib/MarsRoverControllerLib.csproj \
 dotnet add ./MarsRover.Tests/MarsRover.Tests.csproj reference ./MarsRoverLib/MarsRoverLib.csproj \
-dotnet add ./MarsRover.Tests/MarsRover.Tests.csproj reference ./MarsRoverControllerLib/MarsRoverControllerLib.csproj \
+dotnet add ./MarsRover.Tests/MarsRover.Tests.csproj reference ./MarsRoverControllerLib/MarsRoverControllerLib.csproj 
 
 # Desctiption
 
@@ -39,11 +39,11 @@ Test Input: \
 1 2 N \
 LMLMLMLMM \
 3 3 E \
-MMRMMRMRRM \
+MMRMMRMRRM 
 
 Expected Output: \
 1 3 N \
-5 1 E \
+5 1 E 
 
 # Conributiron
 
