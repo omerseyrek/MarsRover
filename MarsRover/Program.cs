@@ -19,13 +19,14 @@ namespace MarsRover
             IMarsRover firstMarsRover = ApplicationRoverFactory.CreateMarsRover(firstRoverStatus, PlatouTupple);
             string command = Console.ReadLine();
             commandManager.ExecuteCommand(firstMarsRover, command);
-            System.Console.WriteLine(firstMarsRover.RoverStatus.ToString());
+            
 
             RoverStatus secondRoverStatus = ReadRoverStatus(PlatouTupple);
             command = Console.ReadLine();
             IMarsRover secondMarsRover = ApplicationRoverFactory.CreateMarsRover(secondRoverStatus, PlatouTupple);
             commandManager.ExecuteCommand(secondMarsRover, command);
 
+            System.Console.WriteLine(firstMarsRover.RoverStatus.ToString());
             System.Console.WriteLine(secondMarsRover.RoverStatus.ToString());
             Console.ReadLine();
 
