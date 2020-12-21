@@ -7,10 +7,16 @@ namespace MarsRoverControllerLib
     public class MoveForwardComandHandler : IMarsRoverCommandHandler
     {
         public IMarsRoverCommandHandler Succesor { get; }
+        public ILogger Logger { get; }
 
-        public MoveForwardComandHandler(IMarsRoverCommandHandler succesor)
+        public MoveForwardComandHandler(IMarsRoverCommandHandler succesor, ILogger logger)
         {
+            if (logger == null)
+            {
+                throw new System.ArgumentException("MoveForwardComandHandler constructors logger parameter should not be null");
+            }
             Succesor = succesor;
+            Logger = logger;
         }
 
         public void HandleCommand(IMarsRover marsRover, string commandKey)
@@ -28,7 +34,7 @@ namespace MarsRoverControllerLib
             }
             else
             {
-                //todo: log the the given command keys handler is not implemented..
+                Logger.Log(marsRover.RoverStatus, $" the command key {commandKey} does not implemented by any command handler");
             }
             
         }

@@ -4,28 +4,82 @@ namespace MarsRoverLib
 {
     public class MarsRover : IMarsRover
     {
+        public (int XSize, int YSize) PlatouTupple { get; set; }
+
         public RoverStatus RoverStatus { get; }
 
-        public MarsRover(RoverStatus status)
+        ILogger Logger = null;
+
+        private const string OutOfPlatouWarning = "the command is going to get the rover out of platou, command did not executed";
+
+        public MarsRover(RoverStatus status, (int,int) platouTupple, ILogger logger )
         {
+            if (status == null)
+            {
+                throw new System.ArgumentException("rover status parameter is null");
+            }
+           
+            if (platouTupple.Item1 < 1 || platouTupple.Item2 < 1)
+            {
+                throw new System.ArgumentException("platou size parameters should be greater than zero");
+            }
+          
+            if (logger == null)
+            {
+                throw new System.ArgumentException("logger  parameter is null");
+            }
+
             RoverStatus = status;
+            PlatouTupple = platouTupple;
+            Logger = logger;
         }
+
+        
 
         public void Move()
         {
             switch (RoverStatus.CurrentDirection)
             {
-                case  Direction.North :
-                    RoverStatus.YPoint = RoverStatus.YPoint +  1;
+                case Direction.North:
+                    if (RoverStatus.YPoint + 1 <= PlatouTupple.YSize)
+                    {
+                        RoverStatus.YPoint = RoverStatus.YPoint + 1;
+                    }
+                    else
+                    {
+                        Logger.Log(RoverStatus, OutOfPlatouWarning);     
+                    }
                     break;
                 case  Direction.East :
-                    RoverStatus.XPoint = RoverStatus.XPoint + 1;
+                    if (RoverStatus.XPoint + 1 <= PlatouTupple.XSize)
+                    {
+                        RoverStatus.XPoint = RoverStatus.XPoint + 1;
+                    }
+                    else
+                    {
+                        Logger.Log(RoverStatus, OutOfPlatouWarning);     
+                    }
                     break;
-                case  Direction.South :
-                    RoverStatus.YPoint = RoverStatus.YPoint - 1;
+                case Direction.South:
+                    if (RoverStatus.YPoint - 1 >= 0)
+                    {
+                        RoverStatus.YPoint = RoverStatus.YPoint - 1;
+                    }
+                    else
+                    {
+                        Logger.Log(RoverStatus, OutOfPlatouWarning);            
+                    }
+
                     break;
                 case  Direction.West :
-                    RoverStatus.XPoint = RoverStatus.XPoint -1 ;
+                    if (RoverStatus.XPoint - 1 >= 0)
+                    {
+                        RoverStatus.XPoint = RoverStatus.XPoint - 1;
+                    }
+                    else
+                    {
+                        Logger.Log(RoverStatus, OutOfPlatouWarning);            
+                    }
                     break;
                 default:
                     break;

@@ -18,3 +18,9 @@ dotnet add ./MarsRover/MarsRover.csproj reference ./MarsRoverLib/MarsRoverLib.cs
 dotnet add ./MarsRover/MarsRover.csproj reference ./MarsRoverControllerLib/MarsRoverControllerLib.csproj
 dotnet add ./MarsRover.Tests/MarsRover.Tests.csproj reference ./MarsRoverLib/MarsRoverLib.csproj
 dotnet add ./MarsRover.Tests/MarsRover.Tests.csproj reference ./MarsRoverControllerLib/MarsRoverControllerLib.csproj
+
+
+#dependencies
+
+MarsRover.Tests depends on Moq 4.15.1 nuget.s
+dotnet add package Moq --version 4.15.1

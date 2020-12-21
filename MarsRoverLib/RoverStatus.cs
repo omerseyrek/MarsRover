@@ -16,5 +16,10 @@ namespace MarsRoverLib
             YPoint = yPoint;
             CurrentDirection = direciton;
         }
+
+        public override string ToString()
+        {
+            return $"{this.XPoint} {this.YPoint} { Enum.GetName(typeof(Direction), CurrentDirection) }";
+        }
     }
 }

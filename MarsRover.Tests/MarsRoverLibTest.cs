@@ -1,19 +1,29 @@
 using System;
 using Xunit;
 using MarsRoverLib;
+using Moq;
 
 namespace MarsRover.Tests
 {
 
     public class MarsRoverLibTests
     {
-    
+        (int, int) platouTupple = (5, 5);
+         
+
+        private IMarsRover CreateMarsRover(RoverStatus roverStatus, (int, int) platouTupple)
+        {
+            Mock<ILogger> testLogger = new Mock<ILogger>();
+            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus, platouTupple, testLogger.Object);
+            return marsRover;
+        }
+
+
         [Fact]
         public void MoveNorth_shoult_increment_ypoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.North);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.North), platouTupple);
 
             //act 
             marsRover.Move();
@@ -27,8 +37,7 @@ namespace MarsRover.Tests
         public void MoveNorth_shoult_not_change_xpoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.North);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+           IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.North),  platouTupple);
 
             //act 
             marsRover.Move();
@@ -43,8 +52,7 @@ namespace MarsRover.Tests
         public void MoveSouth_shoult_decrement_ypoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.South);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover( new RoverStatus(1, 1, Direction.South), platouTupple);
 
             //act 
             marsRover.Move();
@@ -58,8 +66,7 @@ namespace MarsRover.Tests
         public void MoveSouth_shoult_not_change_xpoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.South);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.South), platouTupple);
 
             //act 
             marsRover.Move();
@@ -74,7 +81,7 @@ namespace MarsRover.Tests
         public void MoveEast_shoult_increment_xpoint()
         {
             //arrange
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(new RoverStatus(1, 1, Direction.East));
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.East), platouTupple);
 
             //act 
             marsRover.Move();
@@ -88,8 +95,7 @@ namespace MarsRover.Tests
         public void MoveEast_shoult_not_change_ypoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.East);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.East), platouTupple);
 
             //act 
             marsRover.Move();
@@ -103,8 +109,7 @@ namespace MarsRover.Tests
         public void MoveWest_shoult_decrement_xpoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.West);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.West), platouTupple);
 
             //act 
             marsRover.Move();
@@ -118,8 +123,7 @@ namespace MarsRover.Tests
         public void MoveWest_shoult_not_change_ypoint()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.West);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.West), platouTupple);
 
             //act 
             marsRover.Move();
@@ -135,61 +139,56 @@ namespace MarsRover.Tests
         public void TurnRight_shoult_faceto_east_when_current_is_north()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.North);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.North), platouTupple);
 
             //act 
              marsRover.Turn(TurnSide.Right);
 
-
             //assert
             var expected = Direction.East;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
         [Fact]
         public void TurnRight_shoult_faceto_south_when_current_is_east()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.East);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.East), platouTupple);
 
             //act 
             marsRover.Turn(TurnSide.Right);
 
             //assert
             var expected = Direction.South;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
          [Fact]
         public void TurnRight_shoult_faceto_west_when_current_is_south()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.South);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.South), platouTupple);
 
             //act 
              marsRover.Turn(TurnSide.Right);
 
             //assert
             var expected = Direction.West;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
         [Fact]
         public void TurnRight_shoult_faceto_north_when_current_is_west()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.West);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.West), platouTupple);
 
             //act 
              marsRover.Turn(TurnSide.Right);
 
             //assert
             var expected = Direction.North;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
         
@@ -197,60 +196,55 @@ namespace MarsRover.Tests
         public void TurnLeft_should_faceto_west_when_current_is_north()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.North);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
-
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.North), platouTupple);
             //act 
             marsRover.Turn(TurnSide.Left);
 
             //assert
             var expected = Direction.West;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
         [Fact]
         public void TurnLeft_should_faceto_north_when_current_is_east()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.East);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.East), platouTupple);
 
             //act 
            marsRover.Turn(TurnSide.Left);
 
             //assert
             var expected = Direction.North;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
          [Fact]
         public void TurnLeft_should_faceto_east_when_current_is_south()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.South);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.South), platouTupple);
 
             //act 
             marsRover.Turn(TurnSide.Left);
 
             //assert
             var expected = Direction.East;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
 
         [Fact]
         public void TurnLeft_should_faceto_south_when_current_is_west()
         {
             //arrange
-            RoverStatus roverStatus = new RoverStatus(1, 1, Direction.West);
-            IMarsRover marsRover = new MarsRoverLib.MarsRover(roverStatus);
+            IMarsRover marsRover = CreateMarsRover(new RoverStatus(1, 1, Direction.West), platouTupple);
 
             //act 
             marsRover.Turn(TurnSide.Left);
 
             //assert
             var expected = Direction.South;
-            Assert.Equal(expected, roverStatus.CurrentDirection);
+            Assert.Equal(expected,  marsRover.RoverStatus.CurrentDirection);
         }
     }
 }

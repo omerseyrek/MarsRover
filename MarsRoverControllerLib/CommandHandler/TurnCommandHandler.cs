@@ -7,12 +7,20 @@ namespace MarsRoverControllerLib
     public class TurnCommandHandler : IMarsRoverCommandHandler
     {
         public IMarsRoverCommandHandler Succesor { get; }
+        public ILogger Logger { get; }
 
-        public TurnCommandHandler(IMarsRoverCommandHandler succesor)
+        public TurnCommandHandler(IMarsRoverCommandHandler succesor, ILogger logger)
         {
+            if (logger == null)
+            {
+                throw new System.ArgumentException("TurnCommandHandler constructors logger parameter should not be null");
+            }
+
             Succesor = succesor;
+            Logger = logger;
         }
 
+          
         public void HandleCommand(IMarsRover marsRover, string commandKey)
         {
 
@@ -32,7 +40,7 @@ namespace MarsRoverControllerLib
             }
             else
             {
-                //todo: log the the given command keys handler is not implemented..
+                 Logger.Log(marsRover.RoverStatus, $" the command key {commandKey} does not implemented by any command handler");
             }
             
         }
