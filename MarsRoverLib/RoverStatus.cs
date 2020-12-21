@@ -19,7 +19,7 @@ namespace MarsRoverLib
 
         public override string ToString()
         {
-            return $"{this.XPoint} {this.YPoint} { Enum.GetName(typeof(Direction), CurrentDirection) }";
+            return $"{this.XPoint} {this.YPoint} { Enum.GetName(typeof(Direction), CurrentDirection)[0] }";
         }
 
         public override bool Equals(object obj)
