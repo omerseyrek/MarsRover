@@ -21,5 +21,23 @@ namespace MarsRoverLib
         {
             return $"{this.XPoint} {this.YPoint} { Enum.GetName(typeof(Direction), CurrentDirection) }";
         }
+
+        public override bool Equals(object obj)
+        {
+            RoverStatus objectToCompare = (RoverStatus)obj;
+            if (objectToCompare.XPoint == this.XPoint
+                && objectToCompare.YPoint == this.YPoint
+                && objectToCompare.CurrentDirection == this.CurrentDirection
+            )
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
