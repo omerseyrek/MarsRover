@@ -44,15 +44,14 @@ Expected Output:
 5 1 E
 
 # Conributiron
-I marked up some points with "//todo", that parts needs to be improved, 
+
+I marked up some points with "//todo", that parts needs to be improved,
 
 # Archeitectural Decisions
 
 chain of responsibility pattern implemented in order to excute L R and M comman arrays, any new type of command should implement IMarsRoverCommandHandler interface and should be linked to the chain of responsibility
 
-
 # Question Marks
+
 does the rovers accepted to exceed the plateu co-ordinate limits, i designed as it should be limited but, the rule should be discussed.
-
-
-
+discus changeable and unchangable issues and rules.
